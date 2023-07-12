@@ -46,6 +46,6 @@ const AboutScreen = () => {
             </Card>
         </ScrollView>
     );
-}
- 
+};
+
 export default AboutScreen;
