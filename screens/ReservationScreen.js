@@ -32,7 +32,6 @@ const ReservationScreen = () => {
 
     }
 
-
     return (
         <ScrollView>
             <View style={styles.formRow}>
