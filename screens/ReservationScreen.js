@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Text, TabView, ScrollView, StyleSheet, Switch, Button } from "react-native-elements";
+import { Text, View, Modal, ScrollView, StyleSheet, Switch, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { DateTimePicker } from "@react-native-community/datetimepicker";
-import { Modal } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+
 
 const ReservationScreen = () => {
     const [campers, setCampers] = useState(1);
@@ -38,7 +38,7 @@ const ReservationScreen = () => {
                 <Text style={styles.formLabel}>Number of Campers:</Text>
                 <Picker
                     style={styles.formItem}
-                    selectedVale={campers}
+                    selectedValue={campers}
                     onValueChange={(itemValue) => setCampers(itemValue)}>
 
                     <Picker.Item label="1" value={1} />

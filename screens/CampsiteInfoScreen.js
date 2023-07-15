@@ -37,11 +37,12 @@ const CampsiteInfoScreen = ({ route }) => {
                 }}
                 ListHeaderComponent={
                     <>
-                        <RenderCampsite 
+                        <RenderCampsite
                             campsite={campsite}
                             isFavorite={favorites.includes(campsite.id)}
-                            markFavorite={() => 
+                            markFavorite={() =>
                                 dispatch(toggleFavorite(campsite.id))}
+                            onShowModal={() => setShowModal(!showModal)}
                         />
                         <Text style={styles.commentsTitle}>Comments</Text>
                     </>
@@ -54,16 +55,18 @@ const CampsiteInfoScreen = ({ route }) => {
                 onRequestClose={() => setShowModal(!showModal)}
 
             >
-            <View style={styles.modal}>
-                <View style={{margin: 10}}>
-                    <Button
-                        onPress={setShowModal(!showModal)}
-                        color='#808080'
-                        title='Cancel'
-                    ></Button>
+                <View style={styles.modal}>
+                    <View style={{ margin: 10 }}>
+                        <Button
+                            onPress={() => {
+                                setShowModal(!showModal)}
+                            }
+                            color='#808080'
+                            title='Cancel'
+                        ></Button>
+                    </View>
                 </View>
-            </View>   
-            </Modal>      
+            </Modal>
         </>
     );
 };
