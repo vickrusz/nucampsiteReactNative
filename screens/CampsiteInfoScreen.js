@@ -29,7 +29,7 @@ const CampsiteInfoScreen = ({ route }) => {
         setRating(5);
         setAuthor('');
         setText('');
-    }
+    };
 
     const renderCommentItem = ({ item }) => {
         return (
