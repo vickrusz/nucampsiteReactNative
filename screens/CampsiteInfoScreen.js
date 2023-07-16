@@ -11,7 +11,25 @@ const CampsiteInfoScreen = ({ route }) => {
     const dispatch = useDispatch();
 
     const [showModal, setShowModal] = useState(false);
+    const [rating, setRating] = useState(5);
+    const [author, setAuthor] = useState('');
+    const [text, setText] = useState('');
 
+    const handleSubmit = () => {
+        const newComment = {
+            author,
+            rating,
+            text,
+            campsiteId: campsite.id
+        };
+        console.log(newComment, setShowModal(!showModal));
+    }
+
+    const resetForm = () => {
+        setRating(5);
+        setAuthor('');
+        setText('');
+    }
 
     const renderCommentItem = ({ item }) => {
         return (
@@ -53,7 +71,6 @@ const CampsiteInfoScreen = ({ route }) => {
                 transparent={false}
                 visible={showModal}
                 onRequestClose={() => setShowModal(!showModal)}
-
             >
                 <View style={styles.modal}>
                     <View style={{ margin: 10 }}>

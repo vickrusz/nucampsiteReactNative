@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Text, View, Modal, ScrollView, StyleSheet, Switch, Button } from "react-native";
+import {
+    Text,
+    View, 
+    Modal, 
+    ScrollView, 
+    StyleSheet,
+    Switch, 
+    Button
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -9,28 +17,28 @@ const ReservationScreen = () => {
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
+
     const [showModal, setShowModal] = useState(false);
 
     const onDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShowCalendar(Platform.OS === 'ios');
         setDate(currentDate);
-    }
+    };
 
     const handleReservation = () => {
         console.log('campers:', campers);
         console.log('hikeIn:', hikeIn);
         console.log('date:', date);
         setShowModal(!showModal);
-    }
+    };
 
     const resetForm = () => {
         setCampers(1);
         setHikeIn(false);
         setDate(new Date());
         setShowCalendar(false);
-
-    }
+    };
 
     return (
         <ScrollView>
@@ -51,7 +59,7 @@ const ReservationScreen = () => {
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Hike In?</Text>
-                <Switch 
+                <Switch
                     style={styles.formItem}
                     value={hikeIn}
                     trackColor={{ true: '#5637DD', false: null }}
@@ -77,7 +85,7 @@ const ReservationScreen = () => {
                 />
             )}
             <View style={styles.formRow}>
-                <Button 
+                <Button
                     onPress={() => handleReservation()}
                     title='Search Availability'
                     color='#5637DD'

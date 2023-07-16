@@ -2,21 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { Card, Icon } from "react-native-elements";
 import { baseUrl } from "../../shared/baseUrl";
 
-const RenderCampsite = ( props ) => {
+const RenderCampsite = (props) => {
     const { campsite } = props;
     if (campsite) {
         return (
             <Card containerStyle={styles.cardContainer}>
-                <Card.Image source={{uri: baseUrl + campsite.image}}>
+                <Card.Image source={{ uri: baseUrl + campsite.image }}>
                     <View style={{ justifyContent: "center", flex: 1 }}>
-                        <Text
-                            style={{
-                                color: "white",
-                                textAlign: "center",
-                                fontSize: 20
-                            }}
-                        >
-                            {styles.cardText}
+                        <Text style={styles.cardText}>
+                            {campsite.name}
                         </Text>
                     </View>
                 </Card.Image>
@@ -30,9 +24,10 @@ const RenderCampsite = ( props ) => {
                         reverse
                         onPress={() => props.isFavorite
                             ? console.log("Already set as a favorite")
-                            : props.markFavorite()} 
+                            : props.markFavorite()
+                        }
                     />
-                    <Icon 
+                    <Icon
                         name='pencil'
                         type='font-awesome'
                         color='#5637DD'
@@ -62,7 +57,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
         textShadowColor: 'rgba(0,0,0,1)',
-        textShadowOffset: {width: -1, height: 1},
+        textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 20,
         textAlign: 'center',
         color: 'white',

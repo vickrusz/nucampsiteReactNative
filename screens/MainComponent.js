@@ -175,6 +175,7 @@ const Main = () => {
         dispatch(fetchPartners());
         dispatch(fetchComments());
     }, [dispatch])
+
     return (
         <View 
             style = {{ 
