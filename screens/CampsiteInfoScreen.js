@@ -115,7 +115,7 @@ const CampsiteInfoScreen = ({ route }) => {
                     <View style={{ margin: 10 }}>
                         <Button
                             title='Submit'
-                            color='5637DD'
+                            color='#5637DD'
                             onPress={() => {
                                 handleSubmit();
                                 resetForm();
