@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { CheckBox, Input, Button, Icon } from "react-native-elements";
 import * as SecureStore from 'expo-secure-store';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as ImagePicker from 'expo-image-picker';
+import { baseUrl } from "../shared/baseUrl";
+import logo from '../assets/images/logo.png';
 
 const LoginTab = () => {
     const [username, setUsername] = useState('');
@@ -22,7 +25,7 @@ const LoginTab = () => {
                 })
             ).catch((error) => console.log('Could not save user info', error));
         } else {
-            SecureStore.deleteItemAsync('userinfo').catch((error) => 
+            SecureStore.deleteItemAsync('userinfo').catch((error) =>
                 console.log('Could not delete user info', error)
             );
         }
@@ -39,7 +42,7 @@ const LoginTab = () => {
         });
     }, []);
 
-    return(
+    return (
         <View style={styles.container}>
             <Input
                 placeholder="Username"
@@ -70,14 +73,14 @@ const LoginTab = () => {
                     title='Login'
                     color='#5637DD'
                     icon={
-                        <Icon 
+                        <Icon
                             name='sign-in'
                             type='font-awesome'
                             color='#fff'
                             iconStyle={{ marginRight: 10 }}
                         />
                     }
-                    buttonStyle={{ backgroundColor: '#5637DD'}}
+                    buttonStyle={{ backgroundColor: '#5637DD' }}
                 />
             </View>
             <View style={styles.formButton}>
@@ -86,14 +89,14 @@ const LoginTab = () => {
                     title='Register'
                     type='clear'
                     icon={
-                        <Icon 
+                        <Icon
                             name='user-plus'
                             type='font-awesome'
                             color='blue'
                             iconStyle={{ marginRight: 10 }}
                         />
                     }
-                    titleStyle={{ color: 'blue'}}
+                    titleStyle={{ color: 'blue' }}
                 />
             </View>
         </View>
@@ -107,6 +110,7 @@ const RegisterTab = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [remember, setRemember] = useState(false);
+    const [imageUrl, setImageUrl] = useState(baseUrl + 'images/logo.png');
 
     const handleRegister = () => {
         const userinfo = {
@@ -118,7 +122,7 @@ const RegisterTab = () => {
             remember
         };
         console.log(JSON.stringify(userinfo));
-        
+
         if (remember) {
             SecureStore.setItemAsync(
                 'userinfo',
@@ -128,15 +132,39 @@ const RegisterTab = () => {
                 })
             ).catch((error) => console.log('Could not save user info', error));
         } else {
-            SecureStore.deleteItemAsync('userinfo').catch((error) => 
+            SecureStore.deleteItemAsync('userinfo').catch((error) =>
                 console.log('Could not delete user info', error)
             );
         }
     };
 
+    const getImageFromCamera = async () => {
+        const cameraPermission =
+            await ImagePicker.requestCameraPermissionsAsync();
+
+        if (cameraPermission.status === 'granted') {
+            const capturedImage = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [1, 1]
+            });
+            if (capturedImage.assets) {
+                console.log(capturedImage.assets[0]);
+                setImageUrl(capturedImage.assets[0].uri);
+            }
+        }
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
+                <View style={styles.imageContainer}>
+                    <Image
+                        source={{ uri: imageUrl }}
+                        loadingIndicatorSource={logo}
+                        style={styles.image}
+                    />
+                    <Button title='Camera' onPress={getImageFromCamera} />
+                </View>
                 <Input
                     placeholder="Username"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
@@ -145,7 +173,7 @@ const RegisterTab = () => {
                     containerStyle={styles.formInput}
                     leftIconContainerStyle={styles.formIcon}
                 />
-                  <Input
+                <Input
                     placeholder="Password"
                     leftIcon={{ type: 'font-awesome', name: 'key' }}
                     onChangeText={(text) => setPassword(text)}
@@ -153,7 +181,7 @@ const RegisterTab = () => {
                     containerStyle={styles.formInput}
                     leftIconContainerStyle={styles.formIcon}
                 />
-                  <Input
+                <Input
                     placeholder="First Name"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                     onChangeText={(text) => setFirstName(text)}
@@ -161,7 +189,7 @@ const RegisterTab = () => {
                     containerStyle={styles.formInput}
                     leftIconContainerStyle={styles.formIcon}
                 />
-                  <Input
+                <Input
                     placeholder="Last Name"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                     onChangeText={(text) => setLastName(text)}
@@ -190,17 +218,17 @@ const RegisterTab = () => {
                         title='Register'
                         color='#5637DD'
                         icon={
-                            <Icon 
+                            <Icon
                                 name='user-plus'
                                 type='font-awesome'
                                 color='#fff'
                                 iconStyle={{ marginRight: 10 }}
                             />
                         }
-                        buttonStyle={{ backgroundColor: '#5637DD'}}
+                        buttonStyle={{ backgroundColor: '#5637DD' }}
                     />
                 </View>
-                
+
             </View>
         </ScrollView>
     );
@@ -259,7 +287,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     formIcon: {
-        marginRight: 10    
+        marginRight: 10
     },
     formInput: {
         padding: 8,
@@ -273,6 +301,17 @@ const styles = StyleSheet.create({
         margin: 20,
         marginRight: 40,
         marginLeft: 40
+    },
+    imageContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        margin: 10
+    },
+    image: {
+        width: 60,
+        height: 60
     }
 })
 
